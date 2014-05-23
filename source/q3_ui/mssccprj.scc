@@ -1,0 +1,9 @@
+SCC = This is a Source Code Control file
+
+[ui.dsp]
+SCC_Aux_Path = "D:\VISUALSTUDIO\COMMON\VSS"
+SCC_Project_Name = "$/Quake 3 Mod/ui", UWBAAAAA
+
+[q3_ui.dsp]
+SCC_Aux_Path = "D:\VisualStudio\Common\VSS"
+SCC_Project_Name = "$/Quake 3 Mod/q3_ui", OBCAAAAA

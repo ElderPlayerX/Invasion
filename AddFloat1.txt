@@ -1,0 +1,70 @@
+void AddFloat( char **buf_p, float fval, int width, int prec ) {
+	char	text[32];
+	int		digits;
+	float	signedVal;
+	char	*buf;
+	int		val;
+    int     precpower;
+    int     i;
+
+	// FIXME!!!! handle fractions
+
+	digits = 0;
+	signedVal = fval;
+	if ( fval < 0 ) {
+		fval = -fval;
+	}
+
+// *** BEGIN 2083 ***
+// purpose:
+//     ADDFLOAT
+// description:
+//     Adds fractions/precision support to the AddFloat function.
+//     Note: the AddFloat function first builds the string in reverse order,
+//     then copies it to the buffer char by char.
+// authors:
+//     nova (nova@0x01.net)
+// change log:
+//     2000-04-13: added fractions support.
+
+        if ( prec > 0 ) {
+            precpower = 1;
+            for (i = 0; i<prec; i++) precpower *= 10;
+            val = (int)((fval+0.000001) * precpower);
+            while ( prec-- ) {
+                text[digits++] = '0' + val % 10;
+                val /= 10;
+            }
+            text[digits++] = '.';
+        }
+
+      //val = (int)fval;
+      //do {
+      //    text[digits++] = '0' + val % 10;
+      //    val /= 10;
+      //} while ( val );
+        val = ((int)(fval * 10)) / 10;     // don't round, but use floor-like truncation!
+        do {
+            text[digits++] = '0' + val % 10;
+            val /= 10;
+        } while ( val );
+
+// *** END 2083 ***
+
+	if ( signedVal < 0 ) {
+		text[digits++] = '-';
+	}
+
+	buf = *buf_p;
+
+	while ( digits < width ) {
+		*buf++ = ' ';
+		width--;
+	}
+
+	while ( digits-- ) {
+		*buf++ = text[digits];
+	}
+
+	*buf_p = buf;
+}

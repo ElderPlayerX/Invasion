@@ -1,0 +1,134 @@
+<html>
+<body>
+<pre>
+<h1>Build Log</h1>
+<h3>
+--------------------Configuration: cgame - Win32 Debug--------------------
+</h3>
+<h3>Command Lines</h3>
+Creating temporary file "c:\Temp\RSP1FE.tmp" with contents
+[
+/nologo /G5 /MTd /W4 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "MISSIONPACK" /FR"Debug/" /Fp"Debug/cgame.pch" /YX /Fo"Debug/" /Fd"Debug/" /FD /c 
+"D:\Quake3\source\game\bg_misc.c"
+"D:\Quake3\source\game\bg_pmove.c"
+"D:\Quake3\source\game\bg_slidemove.c"
+"D:\Quake3\source\cgame\cg_consolecmds.c"
+"D:\Quake3\source\cgame\cg_draw.c"
+"D:\Quake3\source\cgame\cg_drawtools.c"
+"D:\Quake3\source\cgame\cg_effects.c"
+"D:\Quake3\source\cgame\cg_ents.c"
+"D:\Quake3\source\cgame\cg_event.c"
+"D:\Quake3\source\cgame\cg_info.c"
+"D:\Quake3\source\cgame\cg_localents.c"
+"D:\Quake3\source\cgame\cg_main.c"
+"D:\Quake3\source\cgame\cg_marks.c"
+"D:\Quake3\source\cgame\cg_newDraw.c"
+"D:\Quake3\source\cgame\cg_players.c"
+"D:\Quake3\source\cgame\cg_playerstate.c"
+"D:\Quake3\source\cgame\cg_predict.c"
+"D:\Quake3\source\cgame\cg_scoreboard.c"
+"D:\Quake3\source\cgame\cg_servercmds.c"
+"D:\Quake3\source\cgame\cg_snapshot.c"
+"D:\Quake3\source\cgame\cg_syscalls.c"
+"D:\Quake3\source\cgame\cg_view.c"
+"D:\Quake3\source\cgame\cg_weapons.c"
+"D:\Quake3\source\game\q_math.c"
+"D:\Quake3\source\game\q_shared.c"
+"D:\Quake3\source\ui\ui_shared.c"
+]
+Creating command line "cl.exe @c:\Temp\RSP1FE.tmp" 
+Creating temporary file "c:\Temp\RSP1FF.tmp" with contents
+[
+/nologo /base:"0x30000000" /subsystem:windows /dll /incremental:yes /pdb:"Debug/cgamex86.pdb" /map:"Debug/cgamex86.map" /debug /machine:I386 /def:".\cgame.def" /out:"E:\DoomLike\Quake3\ManuTOO\cgamex86.dll" /implib:"Debug/cgamex86.lib" 
+.\Debug\bg_misc.obj
+.\Debug\bg_pmove.obj
+.\Debug\bg_slidemove.obj
+.\Debug\cg_consolecmds.obj
+.\Debug\cg_draw.obj
+.\Debug\cg_drawtools.obj
+.\Debug\cg_effects.obj
+.\Debug\cg_ents.obj
+.\Debug\cg_event.obj
+.\Debug\cg_info.obj
+.\Debug\cg_localents.obj
+.\Debug\cg_main.obj
+.\Debug\cg_marks.obj
+.\Debug\cg_newDraw.obj
+.\Debug\cg_players.obj
+.\Debug\cg_playerstate.obj
+.\Debug\cg_predict.obj
+.\Debug\cg_scoreboard.obj
+.\Debug\cg_servercmds.obj
+.\Debug\cg_snapshot.obj
+.\Debug\cg_syscalls.obj
+.\Debug\cg_view.obj
+.\Debug\cg_weapons.obj
+.\Debug\q_math.obj
+.\Debug\q_shared.obj
+.\Debug\ui_shared.obj
+]
+Creating command line "link.exe @c:\Temp\RSP1FF.tmp"
+<h3>Output Window</h3>
+Compiling...
+bg_misc.c
+bg_pmove.c
+bg_slidemove.c
+cg_consolecmds.c
+d:\quake3\source\cgame\cg_consolecmds.c(371) : error C2065: 'GT_1FCTF' : undeclared identifier
+cg_draw.c
+d:\quake3\source\cgame\cg_draw.c(48) : error C2078: too many initializers
+d:\quake3\source\cgame\cg_draw.c(60) : error C2078: too many initializers
+d:\quake3\source\cgame\cg_draw.c(3583) : error C2065: 'GT_1FCTF' : undeclared identifier
+d:\quake3\source\cgame\cg_draw.c(3587) : error C2065: 'GT_OBELISK' : undeclared identifier
+d:\quake3\source\cgame\cg_draw.c(3591) : error C2065: 'GT_HARVESTER' : undeclared identifier
+cg_drawtools.c
+cg_effects.c
+cg_ents.c
+D:\Quake3\source\cgame\cg_ents.c(938) : error C2065: 'GT_1FCTF' : undeclared identifier
+D:\Quake3\source\cgame\cg_ents.c(965) : error C2065: 'GT_OBELISK' : undeclared identifier
+D:\Quake3\source\cgame\cg_ents.c(1069) : error C2065: 'GT_HARVESTER' : undeclared identifier
+cg_event.c
+D:\Quake3\source\cgame\cg_event.c(1284) : error C2065: 'GT_1FCTF' : undeclared identifier
+cg_info.c
+D:\Quake3\source\cgame\cg_info.c(318) : error C2065: 'GT_1FCTF' : undeclared identifier
+D:\Quake3\source\cgame\cg_info.c(318) : error C2051: case expression not constant
+D:\Quake3\source\cgame\cg_info.c(321) : error C2065: 'GT_OBELISK' : undeclared identifier
+D:\Quake3\source\cgame\cg_info.c(321) : error C2051: case expression not constant
+D:\Quake3\source\cgame\cg_info.c(324) : error C2065: 'GT_HARVESTER' : undeclared identifier
+D:\Quake3\source\cgame\cg_info.c(324) : error C2051: case expression not constant
+cg_localents.c
+cg_main.c
+D:\Quake3\source\cgame\cg_main.c(633) : error C2065: 'GT_1FCTF' : undeclared identifier
+D:\Quake3\source\cgame\cg_main.c(639) : error C2065: 'GT_OBELISK' : undeclared identifier
+D:\Quake3\source\cgame\cg_main.c(936) : error C2065: 'GT_HARVESTER' : undeclared identifier
+cg_marks.c
+cg_newDraw.c
+d:\quake3\source\cgame\cg_newdraw.c(759) : error C2065: 'GT_1FCTF' : undeclared identifier
+d:\quake3\source\cgame\cg_newdraw.c(761) : error C2065: 'GT_HARVESTER' : undeclared identifier
+d:\quake3\source\cgame\cg_newdraw.c(1293) : error C2065: 'GT_OBELISK' : undeclared identifier
+cg_players.c
+d:\quake3\source\cgame\cg_players.c(3044) : error C2065: 'GT_HARVESTER' : undeclared identifier
+cg_playerstate.c
+cg_predict.c
+D:\Quake3\source\cgame\cg_predict.c(314) : error C2065: 'GT_1FCTF' : undeclared identifier
+D:\Quake3\source\cgame\cg_predict.c(321) : error C2065: 'GT_HARVESTER' : undeclared identifier
+cg_scoreboard.c
+cg_servercmds.c
+D:\Quake3\source\cgame\cg_servercmds.c(184) : error C2065: 'GT_HARVESTER' : undeclared identifier
+D:\Quake3\source\cgame\cg_servercmds.c(342) : error C2065: 'GT_1FCTF' : undeclared identifier
+cg_snapshot.c
+cg_syscalls.c
+cg_view.c
+cg_weapons.c
+q_math.c
+q_shared.c
+ui_shared.c
+Error executing cl.exe.
+
+
+
+<h3>Results</h3>
+cgamex86.dll - 27 error(s), 0 warning(s)
+</pre>
+</body>
+</html>

@@ -1,0 +1,191 @@
+
+
+Sorry this took so long to send... busy w/ work and stuff.
+Anyway, I'm just gonna paste the code in here you guys can sort it out...
+ 
+In CG_ConsoleCmds.c I wrote this code under CG_TellAttacker:
+ 
+// SANTACLAWS - menu command functions
+void CG_MenuToggle_f( void )
+{
+    if (cg.showMenu == qtrue)
+    {
+        if (cg.currentMenu->parentMenu)
+            cg.currentMenu = cg.currentMenu->parentMenu;
+        else
+            cg.showMenu = qfalse;
+    }
+    else
+    {
+        cg.currentMenu = &menuWeapons;
+        cg.selectedMenuItem = 0;
+        cg.showMenu = qtrue;
+    }
+}
+ 
+static void CG_MenuNext_f( void )
+{
+    while (1)
+    {
+        cg.selectedMenuItem++;
+        if (cg.selectedMenuItem >= cg.currentMenu->numItems)
+            cg.selectedMenuItem = 0;
+        if (strcmp( " ", cg.currentMenu->menuItems[cg.selectedMenuItem].itemCaption ))
+            break;
+    }
+}
+ 
+static void CG_MenuPrevious_f( void )
+{
+    while (1)
+    {
+        cg.selectedMenuItem--;
+        if (cg.selectedMenuItem < 0)
+            cg.selectedMenuItem = cg.currentMenu->numItems - 1;
+        if (strcmp( " ", cg.currentMenu->menuItems[cg.selectedMenuItem].itemCaption ))
+            break;
+    }
+}
+ 
+static void CG_MenuSelect_f( void )
+{
+    qmenuitem_t *mi;
+ 
+    if (cg.showMenu != qtrue)
+        return;
+ 
+    mi = &cg.currentMenu->menuItems[cg.selectedMenuItem];
+    if (mi->itemAction)
+        cg.currentMenu = mi->itemAction;
+    else
+        cg.showMenu = qfalse;
+ 
+    if (mi->itemCommand)
+        trap_SendClientCommand( mi->itemCommand );
+ 
+    cg.selectedMenuItem = 0;
+}
+// SANTACLAWS - end
+
+These functions handle all of the movement throughout the menus. Then, below, I added the actual commands for the menu functions in the commands[] structure.
+ 
+// SANTACLAWS - menu cmds
+ { "menutoggle", CG_MenuToggle_f },
+ { "menunext", CG_MenuNext_f },
+ { "menuprevious", CG_MenuPrevious_f },
+ { "menuselect", CG_MenuSelect_f },
+// SANTACLAWS - end
+
+The other part of the code is the code that actually draws the menu onto the screen. For that part I have code in CG_Draw.c. The code is as follows:
+ 
+// SANTACLAWS - menu drawing function
+qmenuitem_t menuTestItems[] = {
+    { "Sub-Menu #1", &menuSubMenu1, NULL },
+    { "Menu Item #1", NULL, "cmd1" },
+    { "Menu Item #2", NULL, "cmd2" },
+    { "Menu Item #3", NULL, "cmd3" },
+    { " ",    NULL,    NULL },
+    { "Close",    NULL,    NULL },
+    {    NULL,    NULL,    NULL } // signifies the end of the itemlist
+};
+ 
+qmenuitem_t menuSubMenu1Items[] = {
+    { "SubMenuItem #1", NULL, "smcmd1" },
+    { "SubMenuItem #2", NULL, "smcmd2" },
+    { " ",    NULL,    NULL },
+    { "Close",    NULL,    NULL },
+    {    NULL,    NULL,    NULL } // signifies the end of the itemlist
+};
+ 
+qmenu_t menuTest = {
+ "TEST MENU", // MENU TITLE
+ NULL, // PARENT MENU
+ 7, // NUMBER OF ITEMS
+ menuTestItems // ITEM LIST
+};
+
+qmenu_t menuSubMenu1 = {
+ "SUB-MENU #1",
+ &menuTest,
+ 5,
+ menuSubMenu1Items
+};
+ 
+static void CG_DrawMenu( int x, int y )
+{
+    qmenuitem_t *mi;
+    int i, iWidth = 12, iHeight = 16, supah = 250;
+ 
+    float cl_white[4], cl_green[4], cl_yellow[4];
+    vec3_t  origin, angles;
+ 
+    if (!cg.showMenu)
+        return;
+    if (!cg.currentMenu)
+        return;
+    if (cg.currentMenu->numItems <= 0)
+        return;
+    if (!cg.currentMenu->menuItems)
+        return;
+ 
+    cl_white[0] = cl_white[1] = cl_white[2] = 1;
+    cl_white[3] = 1;
+    cl_green[0] = cl_green[2] = 0;
+    cl_green[1] = 1;
+    cl_green[3] = 0.75;
+    cl_yellow[0] = cl_yellow[1] = 1;
+    cl_yellow[3] = 0.75;
+    cl_yellow[2] = 0;
+ 
+    if (y == -1) // center the menu on the y axis
+        y = (479 - (iHeight * (cg.currentMenu->numItems + 1))) / 2;
+    // CG_DrawPic( x, y, 212,144 , cgs.media.menuBack ); THIS WOULD DRAW A BACKGROUND image... disabled in mine.
+ 
+    CG_DrawStringExt( x, y, cg.currentMenu->menuTitle, cl_yellow, qtrue, qfalse, iWidth, iHeight, 0 );
+    for (i = 0, mi = cg.currentMenu->menuItems; i < cg.currentMenu->numItems && mi->itemCaption; mi++, i++)
+    {
+        if (i == cg.selectedMenuItem)
+            CG_DrawStringExt( x + (iWidth * 2), y + (((i + 1) * iHeight) + ((i + 1) * 2)), mi->itemCaption, cl_green, qtrue, qfalse, iWidth, iHeight, 0 );
+        else
+            CG_DrawStringExt( x + (iWidth * 2), y + (((i + 1) * iHeight) + ((i + 1) * 2)), mi->itemCaption, cl_white, qtrue, qfalse, iWidth, iHeight, 0 );
+    }
+}
+// SANTACLAWS - end
+
+At the bottom of CG_Draw2D:
+ 
+// SANTACLAWS - draw the menu
+    CG_DrawMenu( 16, -1 );
+// SANTACLAWS - end
+ 
+The last thing is to create all of our definitions and declarations... in CG_Local.h, right before the cg_t structure, I have this:
+ 
+// SANTACLAWS - menu structures
+typedef struct qmenuitem_s {
+    char *itemCaption;    // text to display
+    struct qmenu_s *itemAction;    // menu to go to when item chosen
+    char *itemCommand;    // command to execute (game) when item is chosen
+} qmenuitem_t;
+ 
+typedef struct qmenu_s {
+    char *menuTitle;    // title of the menu
+    struct qmenu_s *parentMenu;
+    int numItems;    // the total number of items in the structure below
+    qmenuitem_t *menuItems;    // pointer to the items array (see cg_draw.c)
+};
+ 
+extern qmenu_t menuTest;
+extern qmenu_t menuSubMenu1;
+// SANTACLAWS - end
+ 
+Then, below in the cg_t structure, at the very bottom, add:
+ 
+// SANTACLAWS - menu variables (cg)
+    qboolean    showMenu;    // should we draw the menu on the screen??
+    qmenu_t    *currentMenu;    // pointer to the menu currently being displayed
+    int    selectedMenuItem;
+// SANTACLAWS - end
+ 
+And that's about it... mess around with it, try to add menus... if you have any questions feel free to drop me a line. Thanks to KnighthawK and Ad0 of Survival9mm for helping out on testing the code and contributing parts too....
+ 
+- SantaClaws

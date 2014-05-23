@@ -1,0 +1,77 @@
+
+
+----- Original Message -----
+From: Wankeroo <wankeroo@videotron.ca>
+To: q3coding <q3coding@lyris.gamespy.com>
+Sent: 9 May 2000 17:13
+Subject: [q3coding] Re: [q3coding]A difference in 1.17 ?(my bots seem to
+work differently)
+
+
+
+|     I have two new items that Bots were searching for and finding
+perfectly
+| when using 1.16 but, now after the code has been updated to 1.17, the bots
+| will only search and find the one new item and for some reason the other
+| item is now totally ignored.  I have compared the sources and there is no
+| difference that should cause this, unless the Bot item routines and how
+the
+| "botfiles" code is handled was changed.  The item that the bots are
+finding
+| is directly given to them as a "goal" but, the other item I added like it
+| was any other item.  The bots used to find it and grab it perfectly in
+1.16
+| but, not anymore...
+|
+| I've wasted hours looking for an answer already, pffffffffffffffffffff
+| Has anyone here had success with adding a new item and having the bots
+find
+| it pick it up?
+
+
+I never tried to implement it on Q3, but Gladiator Bots for Q2 (which are
+actually using the same code as Q3's) I had success on this.
+
+
+You know those '.c' and '.h' files that are in 'botfiles' directory?
+
+
+They are actually defining known to bot items and are compiled on every bot
+library init when you add a bot in Q2, or on map load in Q3 by game system
+(non-user-modifyable part).
+
+
+Look around, 'items.c' describes all of that.
+Also there're in 'weapons.c' all described weapons that bot will use and
+count their tactics.
+
+
+For example:
+If you change radius of rocket launcher to zero (in 'botfiles/weapons.c'),
+then you'll probably never see again bot firing rockets in hallways where it
+thinks enemy is or near that spot. (Unless it's a hack in bot library).
+
+
+Set BFG explosion radius and damage there to, say, 1024. Bot will never aim
+BFG the same way. It will aim to take as much enemies as possible. According
+to information it was given of lethality and scale of this weapon.
+
+
+Change railgun projectile speed from zero (instant hit) to, say, speed of
+rocket. Bot will extrapolate your position from speed it knows and will fire
+forward you (and will miss) as it was firing rocket.
+
+
+
+Chao.
+-----------------------------------------------------
+Quaker somewhere on this planet,
+HMage.
+
+
+
+
+
+---
+You are currently subscribed to q3coding as: manutoo@imaginet.fr
+To unsubscribe send a blank email to leave-q3coding-174861D@lyris.gamespy.com

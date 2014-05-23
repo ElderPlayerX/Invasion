@@ -1,0 +1,70 @@
+
+
+Emmanuel,
+
+
+I'll be releasing source when I'm done, but to get you started, here's what 
+I'm doing.
+
+
+I'm keeping a normal (up) vector for the player.  Whenever I do a ground trace,
+I update the normal with the result of the trace.  So, when everything is done, 
+the player model will "magically" orient themselves to the floor.  The other
+change I am doing is going through the code and changing anything that refers
+to velocity[2], or such to being a dot product onto the normal.  
+
+
+In my current code I can walk up any slope as long as it doesn't exceed the 
+id-defined maximum.  In other words, you will keep sticking to the floor 
+if the slope is gradual enough, and the wall will become your new floor.  I've
+figured out how to change the view angles (finally - thanks guys), so the
+view should orient around the normal properly soon too. :)  The key is to 
+not rewrite the existing code.  The only functions that I am changing
+drastically are the AnglesToAxes (and one other) to take into account the
+normal, and apply an additional roll rotation at the start.  Other code I've
+looked at such as MatrixQuake does this differently with special
+updateViewAngles code that has a tonne of special cases for the type of wall
+you are on. (too complicated for me)
+
+
+One other tip.  You aren't going to be able to make this mod server-side
+only.  If you can remember back to the original quakeworld, and playing 
+CTF with the grapple, you always ended up with wierd bobbing going on.  
+If you avoid updating the client-side, you will get the bobbing with this mod,
+since the client will think that the player should be "falling" when on the
+ceiling. :)
+
+
+Here's something.  While it appears that the int's in the playerstate_t are 
+unsigned longs, when they are transmitted to the client, the integer ends up
+having FFFF in the high-order bits instead of the actual data.  Anyone have
+any ideas?
+
+
+Good luck!
+Jason
+
+
+On Sat, 29 Apr 2000, Emmanuel Rivoire wrote:
+> Hi !
+> 
+> At 08:21 27/04/2000 +1200, you wrote:
+> >I'm doing the standard "Walk on Walls" mod.  So far I've managed to make
+> >it without having to recode large chunks of the vm's. 
+> 
+>   I'd like to make this too !
+>   Is it easy to do player walk on walls ?
+>   Have u some tips to give to quickly start it ?
+> 
+> Thanks,
+> ManuTOO
+
+
+-- 
+Jason Pollock jpollock@g8labs.co.nz, jason@pollock.ca
+G8 Labs NZ phone: +64 4 939 3377 fax: +64 4 939 3390
+
+
+---
+You are currently subscribed to q3coding as: manutoo@imaginet.fr
+To unsubscribe send a blank email to leave-q3coding-174861D@lyris.gamespy.com
